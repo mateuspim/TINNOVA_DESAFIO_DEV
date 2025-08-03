@@ -22,6 +22,8 @@ class ApiService {
     if (!response.ok) {
       const error = new Error(`HTTP error! status: ${response.status}`);
       error.status = response.status;
+      const responseBody = await response.text();
+      error.detail = JSON.parse(responseBody).detail;
       throw error;
     }
 
