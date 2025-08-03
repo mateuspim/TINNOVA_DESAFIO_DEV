@@ -16,6 +16,8 @@ class Settings(BaseSettings):
 
     @field_validator("ALLOWED_ORIGINS")
     def parse_allowed_origins(cls, v: str) -> List[str]:
+        if v == "*":
+            return ["*"]
         return [u for u in v.split(",") if u.startswith("http")] if v else []
 
 
