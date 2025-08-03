@@ -1,21 +1,18 @@
-from fastapi import APIRouter, Depends, HTTPException, Cookie, Response, Query, status
+from fastapi import APIRouter, Depends, HTTPException, Query, status
 from fastapi_pagination.ext.sqlalchemy import paginate
 from fastapi_pagination import Page
 from sqlalchemy.orm import Session
-from sqlalchemy import select
-from sqlalchemy import exc
+from sqlalchemy.exc import SQLAlchemyError
 
-from app.db.database import get_db, SessionLocal
+from app.db.database import get_db
 from app.models.vehicle import Vehicle
 from app.models.brand import Brand
-from datetime import datetime
 from app.schemas.vehicle import (
     VehicleResponse,
     VehicleCreate,
     VehicleUpdate,
     VehiclePatch,
 )
-from typing import List, Union
 
 
 router = APIRouter(
@@ -106,7 +103,7 @@ def update_vehicle(
         db.refresh(vehicle)
         _ = vehicle.brand
         return vehicle
-    except exc.SQLAlchemyError as e:
+    except SQLAlchemyError as e:
         db.rollback()
         raise HTTPException(status.HTTP_500_INTERNAL_SERVER_ERROR, detail=str(e))
 
@@ -124,7 +121,7 @@ def patch_vehicle(
         db.refresh(vehicle)
         _ = vehicle.brand
         return vehicle
-    except exc.SQLAlchemyError as e:
+    except SQLAlchemyError as e:
         db.rollback()
         raise HTTPException(status.HTTP_500_INTERNAL_SERVER_ERROR, detail=str(e))
 
@@ -135,6 +132,6 @@ def delete_vehicle(id: int, db: Session = Depends(get_db)):
     try:
         db.delete(vehicle)
         db.commit()
-    except exc.SQLAlchemyError as e:
+    except SQLAlchemyError as e:
         db.rollback()
         raise HTTPException(status.HTTP_500_INTERNAL_SERVER_ERROR, detail=str(e))
