@@ -1,6 +1,7 @@
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.ext.declarative import declarative_base
+from app.core.logger import logger
 
 from app.core.config import settings
 
@@ -20,4 +21,6 @@ def get_db():
 
 
 def create_tables():
+    logger.info("Creating tables...")
     Base.metadata.create_all(bind=engine)
+    logger.info("Tables created successfully.")
