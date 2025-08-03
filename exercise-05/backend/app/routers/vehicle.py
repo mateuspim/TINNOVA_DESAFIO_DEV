@@ -23,7 +23,7 @@ router = APIRouter(
 )
 
 
-@router.get("", response_model=Page[VehicleResponse])
+@router.get("/", response_model=Page[VehicleResponse])
 def get_vehicles(
     year: int = Query(None, description="Query vehicle by year"),
     brand_id: int = Query(None, description="Query vehicle by brand ID"),
@@ -57,7 +57,7 @@ def get_brand_or_404(db: Session, id: int) -> Brand:
     return brand
 
 
-@router.post("", response_model=VehicleResponse)
+@router.post("/", response_model=VehicleResponse)
 def create_vehicle(
     request: VehicleCreate, db: Session = Depends(get_db)
 ) -> VehicleResponse:
