@@ -1,19 +1,20 @@
-import api from './api';
+import api from "./api";
 
 export const vehicleService = {
   // GET /api/vehicles/ - List vehicles (paginated and with filters)
   async getVehicles(filters = {}) {
     const params = new URLSearchParams();
-    
-    if (filters.page) params.append('page', filters.page);
-    if (filters.size) params.append('size', filters.size);
-    if (filters.year) params.append('year', filters.year);
-    if (filters.brand_id) params.append('brand_id', filters.brand_id);
-    if (filters.color) params.append('color', filters.color);
-    if (filters.is_sold !== undefined) params.append('is_sold', filters.is_sold);
+
+    if (filters.page) params.append("page", filters.page);
+    if (filters.size) params.append("size", filters.size);
+    if (filters.year) params.append("year", filters.year);
+    if (filters.brand_id) params.append("brand_id", filters.brand_id);
+    if (filters.color) params.append("color", filters.color);
+    if (filters.is_sold !== undefined)
+      params.append("is_sold", filters.is_sold);
 
     const queryString = params.toString();
-    return api.get(`/vehicles/${queryString ? '?' + queryString : ''}`);
+    return api.get(`/vehicles/${queryString ? "?" + queryString : ""}`);
   },
 
   // GET /api/vehicles/{id} - Get vehicle by ID
@@ -23,7 +24,7 @@ export const vehicleService = {
 
   // POST /api/vehicles/ - Create new vehicle
   async createVehicle(vehicleData) {
-    return api.post('/vehicles/', vehicleData);
+    return api.post("/vehicles/", vehicleData);
   },
 
   // PUT /api/vehicles/{id} - Update complete vehicle
@@ -39,5 +40,5 @@ export const vehicleService = {
   // DELETE /api/vehicles/{id} - Delete vehicle
   async deleteVehicle(id) {
     return api.delete(`/vehicles/${id}`);
-  }
+  },
 };
