@@ -1,9 +1,14 @@
 def factorial(n: int) -> int:
     """
-    A function that calculates the factorial of a number.
+    A function that calculates the factorial of a non-negative integer.
+    
+    Time Complexity:  O (n)
+    Space Complexity: O (1)
 
-    :param n int: The number to calculate the factorial for.
+    :param n: The number to calculate the factorial for
+    :type n: int
     :return: The factorial of the given number.
+    :rtype: int
     """
     if n < 0:
         raise ValueError("Number must be non-negative")
