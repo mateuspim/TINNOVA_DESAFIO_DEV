@@ -5,6 +5,7 @@ from sqlalchemy.orm import relationship
 from db.database import Base
 from models.vehicle import Vehicle
 
+
 class Brand(Base):
     __tablename__ = "brands"
 
