@@ -84,3 +84,47 @@ def create_vehicle(
     except SQLAlchemyError as e:
         db.rollback()
         raise HTTPException(status.HTTP_500_INTERNAL_SERVER_ERROR, detail=str(e))
+
+
+def get_vehicle_or_404(db: Session, id: int) -> Vehicle:
+    vehicle = db.query(Vehicle).filter(Vehicle.id == id).first()
+    if not vehicle:
+        raise HTTPException(status.HTTP_404_NOT_FOUND, detail="Vehicle not found")
+    return vehicle
+
+
+@router.put("/{id}", response_model=VehicleResponse)
+def update_vehicle(
+    request: VehicleUpdate, id: int, db: Session = Depends(get_db)
+) -> VehicleResponse:
+    vehicle = get_vehicle_or_404(db, id)
+
+    for attr, value in request.dict().items():
+        setattr(vehicle, attr, value)
+
+    try:
+        db.commit()
+        db.refresh(vehicle)
+        _ = vehicle.brand
+        return vehicle
+    except exc.SQLAlchemyError as e:
+        db.rollback()
+        raise HTTPException(status.HTTP_500_INTERNAL_SERVER_ERROR, detail=str(e))
+
+
+@router.patch("/{id}", response_model=VehicleResponse)
+def patch_vehicle(
+    request: VehiclePatch, id: int, db: Session = Depends(get_db)
+) -> VehicleResponse:
+    vehicle = get_vehicle_or_404(db, id)
+
+    for key, value in request.dict(exclude_unset=True).items():
+        setattr(vehicle, key, value)
+    try:
+        db.commit()
+        db.refresh(vehicle)
+        _ = vehicle.brand
+        return vehicle
+    except exc.SQLAlchemyError as e:
+        db.rollback()
+        raise HTTPException(status.HTTP_500_INTERNAL_SERVER_ERROR, detail=str(e))
