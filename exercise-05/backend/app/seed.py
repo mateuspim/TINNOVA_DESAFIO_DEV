@@ -1,5 +1,5 @@
-from db.database import SessionLocal, engine, Base, create_tables
-from models.brand import Brand
+from app.db.database import SessionLocal, engine, Base, create_tables
+from app.models.brand import Brand
 
 vehicle_brands = [
     "Toyota",
