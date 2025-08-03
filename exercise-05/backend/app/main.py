@@ -25,6 +25,8 @@ app.add_middleware(
 )
 
 
+add_pagination(app)
+
 if __name__ == "__main__":
     import uvicorn
 
