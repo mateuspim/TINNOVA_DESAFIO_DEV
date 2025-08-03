@@ -54,7 +54,7 @@ pip install pytest
 
 ### Running the tests
 
-To run tests for the `VoteCounter` class, execute the following command:
+To run tests for the `BubbleSort` function, execute the following command:
 
 ```bash
 pytest tests/bubble_sort.py -v
