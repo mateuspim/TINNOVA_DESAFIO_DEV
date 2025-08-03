@@ -27,7 +27,7 @@ class VehicleResponse(VehicleBase):
         from_attributes = True
 
 
-class VehicleUpdate(VehicleBase):
+class VehicleUpdate(BaseModel):
     model: str
     color: str
     year: int
