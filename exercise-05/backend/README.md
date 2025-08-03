@@ -17,8 +17,9 @@
   - [5. Setup and Installation](#5-setup-and-installation)
     - [5.1. Prerequisites](#51-prerequisites)
     - [5.2. Clone the Repository](#52-clone-the-repository)
-    - [5.3. Setup Options](#53-setup-options)
-    - [5.4. Database Setup](#54-database-setup)
+    - [5.3. Setup Env](#53-setup-the-env-params)
+    - [5.4. Setup Options](#54-setup-options)
+    - [5.5. Database Setup](#55-database-setup)
   - [6. Running the Application](#6-running-the-application)
   - [7. API Endpoints](#7-api-endpoints)
     - [7.1. Brands](#71-brands)
@@ -119,31 +120,40 @@ git clone <repository_url>
 cd tinnova_desafio_dev/exercise-05/backend/
 ```
 
-### 5.3. Setup Options
+### 5.3 Setup the env params
+
+```bash
+cp app/.env.example app/.env
+```
+
+### 5.4. Setup Options
 
 Choose one of the following setup methods:
 
 #### Option A: Local Development with uv (Recommended)
 
 1. **Install uv** (if not already installed):
+
    ```bash
    # On macOS/Linux
    curl -LsSf https://astral.sh/uv/install.sh | sh
- 
+
    # On Windows
    powershell -c "irm https://astral.sh/uv/install.ps1 | iex"
    ```
 
 2. **Install dependencies:**
+
    ```bash
    uv sync
    ```
 
 3. **Activate the virtual environment:**
+
    ```bash
    # On Linux/macOS
    source .venv/bin/activate
- 
+
    # On Windows
    .venv\Scripts\activate
    ```
@@ -151,6 +161,7 @@ Choose one of the following setup methods:
 #### Option B: Local Development with pip
 
 1. **Create and activate virtual environment:**
+
    ```bash
    python -m venv .venv
    # On Linux/macOS
@@ -167,6 +178,7 @@ Choose one of the following setup methods:
 #### Option C: Docker (Production-ready)
 
 1. **Build the Docker image:**
+
    ```bash
    docker build -t tinnova-backend .
    ```
@@ -176,7 +188,7 @@ Choose one of the following setup methods:
    docker run -p 8000:80 tinnova-backend
    ```
 
-### 5.4. Database Setup
+### 5.5. Database Setup
 
 This project uses SQLite, which is file-based and requires no separate server setup. The database file (`./app.db`) will be created automatically when the application runs for the first time or when migrations are applied (if you implement them).
 
