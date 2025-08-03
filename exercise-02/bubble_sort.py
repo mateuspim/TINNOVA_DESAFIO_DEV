@@ -4,6 +4,9 @@ def bubble_sort(v: list) -> list:
 
     Time Complexity:     O (n²)
     Space Complexity:    O (1)
+
+    :param v list: The list to sort.
+    :return: The sorted list.
     """
     if not v:
         return v
