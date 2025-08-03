@@ -40,3 +40,7 @@ htmlcov/
 dist/
 build/
 *.egg-info/
+
+# React app
+node_modules/
+build/
