@@ -7,8 +7,10 @@ from app.core.logger import logger
 from app.db.database import create_tables
 
 from app.routers import vehicle, brand, logs
+from app.seed import seed_brands
 
 create_tables()
+seed_brands()
 
 app = FastAPI(
     title="Vehicle Manager",
