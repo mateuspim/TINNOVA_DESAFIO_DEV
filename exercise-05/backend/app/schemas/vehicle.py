@@ -7,6 +7,7 @@ from app.schemas.brand import BrandResponse
 
 class VehicleBase(BaseModel):
     model: str
+    brand_id: int
     color: str
     year: int
     description: Optional[str] = None
