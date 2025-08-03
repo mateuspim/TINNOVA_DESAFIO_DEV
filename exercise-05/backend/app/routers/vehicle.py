@@ -29,6 +29,7 @@ def get_vehicles(
     year: int = Query(None, description="Query vehicle by year"),
     brand_id: int = Query(None, description="Query vehicle by brand ID"),
     color: str = Query(None, description="Query vehicle by color"),
+    is_sold: bool = Query(None, description="Query vehicle by sold status"),
     db: Session = Depends(get_db),
 ) -> Page[VehicleResponse]:
     logger.info("Starting to fetch all vehicles")
@@ -41,6 +42,8 @@ def get_vehicles(
         query = query.filter(Vehicle.year == year)
     if color is not None:
         query = query.filter(Vehicle.color == color)
+    if is_sold is not None:
+        query  = query.filter(Vehicle.is_sold == is_sold)
 
     query = query.order_by(Vehicle.created_at)
     logger.info("Pagination query executed successfully")
