@@ -5,6 +5,8 @@ from fastapi_pagination import add_pagination
 from app.core.config import settings
 from app.db.database import create_tables
 
+from app.routers import vehicle
+
 create_tables()
 
 app = FastAPI(
@@ -24,7 +26,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-
+app.include_router(vehicle.router, prefix=settings.API_PREFIX)
 add_pagination(app)
 
 if __name__ == "__main__":
