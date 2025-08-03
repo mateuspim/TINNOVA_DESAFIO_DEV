@@ -106,7 +106,7 @@ def update_vehicle(
 ) -> VehicleResponse:
     vehicle = get_vehicle_or_404(db, id)
 
-    for attr, value in request.dict().items():
+    for attr, value in request.model_dump().items():
         setattr(vehicle, attr, value)
 
     try:
@@ -127,7 +127,7 @@ def patch_vehicle(
 ) -> VehicleResponse:
     vehicle = get_vehicle_or_404(db, id)
 
-    for key, value in request.dict(exclude_unset=True).items():
+    for key, value in request.model_dump(exclude_unset=True).items():
         setattr(vehicle, key, value)
     try:
         db.commit()
