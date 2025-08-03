@@ -2,8 +2,7 @@ from sqlalchemy import Column, Integer, String, DateTime, Boolean, Text, Foreign
 from sqlalchemy.sql import func
 from sqlalchemy.orm import relationship
 
-from db.database import Base
-from models.brand import Brand
+from app.db.database import Base
 
 
 class Vehicle(Base):
