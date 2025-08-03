@@ -1,8 +1,9 @@
-from fastapi import APIRouter, Depends, HTTPException, Cookie, Response, Query
+from fastapi import APIRouter, Depends, HTTPException, Cookie, Response, Query, status
 from fastapi_pagination.ext.sqlalchemy import paginate
 from fastapi_pagination import Page
 from sqlalchemy.orm import Session
 from sqlalchemy import select
+from sqlalchemy import exc
 
 from app.db.database import get_db, SessionLocal
 from app.models.vehicle import Vehicle
@@ -14,7 +15,7 @@ from app.schemas.vehicle import (
     VehicleUpdate,
     VehiclePatch,
 )
-from typing import List
+from typing import List, Union
 
 
 router = APIRouter(
@@ -51,3 +52,35 @@ def get_vehicle(id: int, db: Session = Depends(get_db)) -> VehicleResponse:
         raise HTTPException(404, detail="Vehicle not found")
 
     return vehicle
+
+
+def get_brand_or_404(db: Session, id: int) -> Brand:
+    brand = db.query(Brand).filter(Brand.id == id).first()
+    if not brand:
+        raise HTTPException(status.HTTP_404_NOT_FOUND, detail="Brand not found")
+    return brand
+
+
+@router.post("", response_model=VehicleResponse)
+def create_vehicle(
+    request: VehicleCreate, db: Session = Depends(get_db)
+) -> VehicleResponse:
+    brand = get_brand_or_404(db, request.brand_id)
+
+    vehicle = Vehicle(
+        model=request.model,
+        brand_id=request.brand_id,
+        color=request.color,
+        year=request.year,
+        description=request.description,
+        is_sold=request.is_sold,
+    )
+    try:
+        db.add(vehicle)
+        db.commit()
+        db.refresh(vehicle)
+        _ = vehicle.brand
+        return vehicle
+    except SQLAlchemyError as e:
+        db.rollback()
+        raise HTTPException(status.HTTP_500_INTERNAL_SERVER_ERROR, detail=str(e))
