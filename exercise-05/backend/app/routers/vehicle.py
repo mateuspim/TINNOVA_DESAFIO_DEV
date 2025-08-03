@@ -127,3 +127,14 @@ def patch_vehicle(
     except exc.SQLAlchemyError as e:
         db.rollback()
         raise HTTPException(status.HTTP_500_INTERNAL_SERVER_ERROR, detail=str(e))
+
+
+@router.delete("/{id}", status_code=status.HTTP_204_NO_CONTENT)
+def delete_vehicle(id: int, db: Session = Depends(get_db)):
+    vehicle = get_vehicle_or_404(db, id)
+    try:
+        db.delete(vehicle)
+        db.commit()
+    except exc.SQLAlchemyError as e:
+        db.rollback()
+        raise HTTPException(status.HTTP_500_INTERNAL_SERVER_ERROR, detail=str(e))
