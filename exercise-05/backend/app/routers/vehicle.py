@@ -28,14 +28,16 @@ router = APIRouter(
 
 @router.get("", response_model=Page[VehicleResponse])
 def get_vehicles(
-    year: int = Query(None),
-    brand_id: int = Query(None),
-    color: str = Query(None),
+    year: int = Query(None, description="Query vehicle by year"),
+    brand_id: int = Query(None, description="Query vehicle by brand ID"),
+    color: str = Query(None, description="Query vehicle by color"),
     db: Session = Depends(get_db),
 ) -> Page[VehicleResponse]:
     query = db.query(Vehicle)
     if brand_id is not None:
-        query = query.filter(Vehicle.brand_id == brand_id)
+        brand = get_brand_or_404(db, brand_id)
+        if brand:
+            query = query.filter(Vehicle.brand_id == brand_id)
     if year is not None:
         query = query.filter(Vehicle.year == year)
     if color is not None:
@@ -47,10 +49,7 @@ def get_vehicles(
 
 @router.get("/{id}", response_model=VehicleResponse)
 def get_vehicle(id: int, db: Session = Depends(get_db)) -> VehicleResponse:
-    vehicle = db.query(Vehicle).filter(Vehicle.id == id).first()
-    if not vehicle:
-        raise HTTPException(404, detail="Vehicle not found")
-
+    vehicle = get_vehicle_or_404(db, id)
     return vehicle
 
 
