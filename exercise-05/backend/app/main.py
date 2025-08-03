@@ -3,9 +3,10 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi_pagination import add_pagination
 
 from app.core.config import settings
+from app.core.logger import logger
 from app.db.database import create_tables
 
-from app.routers import vehicle, brand
+from app.routers import vehicle, brand, logs
 
 create_tables()
 
@@ -28,6 +29,7 @@ app.add_middleware(
 
 app.include_router(vehicle.router, prefix=settings.API_PREFIX)
 app.include_router(brand.router, prefix=settings.API_PREFIX)
+app.include_router(logs.router, prefix=settings.API_PREFIX)
 add_pagination(app)
 
 if __name__ == "__main__":
