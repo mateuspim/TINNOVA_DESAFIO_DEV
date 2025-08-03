@@ -50,7 +50,7 @@ pip install pytest
 To run tests for the `Factorial` method, execute the following command:
 
 ```bash
-pytest tests/factorial.py -v
+pytest tests/test_factorial.py -v
 # or simply
 pytest -v
 ```
