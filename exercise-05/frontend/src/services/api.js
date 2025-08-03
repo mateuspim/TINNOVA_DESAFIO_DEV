@@ -11,19 +11,28 @@ class ApiService {
       ...options,
     };
 
-    console.log("Sending request:", { url, method: options.method, body: options.body });
+    console.log("Sending request:", {
+      url,
+      method: options.method,
+      body: options.body,
+    });
 
+    const response = await fetch(url, config);
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+
+    // Handle 204 No Content or empty body
+    if (response.status === 204) {
+      return {};
+    }
+
+    const responseText = await response.text();
     try {
-      const response = await fetch(url, config);
-
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-
-      return await response.json();
-    } catch (error) {
-      console.error("API request failed:", error);
-      throw error;
+      return responseText ? JSON.parse(responseText) : {};
+    } catch (e) {
+      return {};
     }
   }
 
