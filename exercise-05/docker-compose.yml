@@ -1,0 +1,26 @@
+services:
+  backend:
+    build: ./backend
+    container_name: tinnova-backend
+    restart: always
+    ports:
+      - "8050:80" 
+    env_file:
+      - ./backend/.env
+    networks:
+      - tinnova-net
+
+  frontend:
+    build: ./frontend
+    container_name: tinnova-frontend
+    restart: always
+    ports:
+      - "3050:5173"
+    environment:
+      - CHOKIDAR_USEPOLLING=true
+    volumes:
+      - ./frontend:/app
+
+networks:
+  tinnova-net:
+    driver: bridge
