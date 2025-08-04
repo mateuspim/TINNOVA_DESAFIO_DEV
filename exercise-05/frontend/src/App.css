@@ -99,19 +99,19 @@ button:hover {
   font-size: 1rem;
   border: 1px solid #ddd;
   border-radius: var(--border-radius);
-  background-color: #d6efff;
-  color: #333;
+  background-color: #d7e7ec;
+  color: #000000;
   text-align: center;
 }
 
 .input-group textarea {
   width: 100%;
-  padding: 1rem;
+  padding: 0.75rem;
   font-size: 1rem;
   border: 1px solid #ddd;
   border-radius: var(--border-radius);
-  background-color: #d6efff;
-  color: #333;
+  background-color: #d7e7ec;
+  color: #000000;
 }
 
 .input-group select {
@@ -120,7 +120,7 @@ button:hover {
   font-size: 1rem;
   border: 1px solid #ddd;
   border-radius: var(--border-radius);
-  background-color: #d6efff;
+  background-color: #d7e7ec;
   color: #333;
   text-align: center;
 }
