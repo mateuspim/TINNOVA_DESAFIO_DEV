@@ -222,8 +222,18 @@ const VehicleList = () => {
             is_sold: "",
           })
         }
+        style={{ marginRight: "1rem" }}
       >
-        Limpar filtros
+        Clean Filters
+      </button>
+      <button
+        type="button"
+        onClick={() =>
+          navigate("/vehicle")
+        }
+        style={{ marginLeft: "1rem" }}
+      >
+        Add new vehicle
       </button>
       <br></br>
       <br></br>
