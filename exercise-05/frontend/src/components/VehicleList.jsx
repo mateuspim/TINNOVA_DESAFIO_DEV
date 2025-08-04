@@ -145,7 +145,7 @@ const VehicleList = () => {
         <div className="error-message">
           <h2>Vehicle Not Found</h2>
           <p>{error}</p>
-          <button onClick={goHome}>Go to Home</button>
+          <button onClick={navigate("/")}>Go to Home</button>
         </div>
       </div>
     );
