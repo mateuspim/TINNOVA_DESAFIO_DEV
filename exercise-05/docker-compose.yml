@@ -18,8 +18,8 @@ services:
       - "3050:5173"
     environment:
       - CHOKIDAR_USEPOLLING=true
-    volumes:
-      - ./frontend:/app
+    networks:
+      - tinnova-net
 
 networks:
   tinnova-net:
